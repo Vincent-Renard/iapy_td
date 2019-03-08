@@ -83,8 +83,8 @@ def afficher_sol(noeud):
     print(len(path) + 1)
 
 
-def getCout(node):
-    return node[2]
+def getCout(noeud):
+    return noeud[2]
 
 
 def heuristic(etat):
