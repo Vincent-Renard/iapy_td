@@ -26,8 +26,8 @@ def aller(actual_state):
         return psbl
     for hungry_men in range(0, c + 1):
         for christians in range(0, m + 1):
-            # 1 condolier et pas plus de 2 personnes dans la pirogue
-            #            if 0 <= hungry_men+christians < 3 and ((m-christians >= c-hungry_men) or (m-christians==0)) and (3-m+christians)==0:
+            # 1 condolier et pas plus de 2 personnes dans la pirogue if 0 <= hungry_men+christians < 3 and ((
+            # m-christians >= c-hungry_men) or (m-christians==0)) and (3-m+christians)==0:
 
             if 0 <= hungry_men + christians < 3 and ((m - christians >= c - hungry_men) or (m - christians == 0)) and (
                     (3 - c + hungry_men) <= (3 - m + christians) or 3 - m + christians) == 0:
