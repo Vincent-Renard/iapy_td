@@ -21,11 +21,79 @@ def base_regles():
           ("prox_etab", 'faux'), ("danger", 'faux')],
          ("vitesse", 30))]
 
-    br = {}
     for regle in regles:
-        if regle[1] in br:
-            br[regle[1]].append(regle[0])
+        if regle[1] in BR:
+            BR[regle[1]].append(regle[0])
         else:
-            br[regle[1]] = [regle[0]]
-    print(br)
-    return br
+            BR[regle[1]] = [regle[0]]
+    # print(br)
+    return BR
+
+
+def add(alpha):
+    for regle in alpha:
+        if regle[1] in BR:
+            BR[regle[1]].append(regle[0])
+        else:
+            BR[regle[1]] = [regle[0]]
+
+
+def ask(alpha):
+    pass
+
+
+def satisfait(c, faits):
+    if c in faits:
+        print(c, " satisfaite")
+        return True
+    (attr, val) = c
+    if val == 'faux':
+        print("l'attribut ", attr, " not vrai --> ", not (attr, 'vrai') in faits)
+        return not (attr, 'vrai') in faits
+
+def base_faits():
+    return [("lieu", "en_ville"), ("type_veh", "leger"),('meteo', 'pluie')]
+
+def nouveau_fait_derive(regles, faits):
+    for f in regles.keys():
+        print("1 .pour la regle qui a pour tete ", f)
+        if f not in faits:
+            print(f, " pas dans les faits")
+            for premisse in regles[f]:
+                ok = True
+                for c in premisse:
+                    print("On cherche a montrer si ", c, " est satisfaite")
+                    if not satisfait(c, faits):
+                        ok = False
+
+                if ok:
+                    return f
+
+
+def chainage_avant_sat(regles, faits):
+    while True:
+        f = nouveau_fait_derive(regles, faits)
+        if f is None:
+            break
+        faits.append(f)
+
+
+def chainage_avant_but(regles, faits, attr):
+    while True:
+        f = nouveau_fait_derive(regles, faits)
+        if not f is None:
+            faits.append(f)
+        if f is None or f[0] == attr:
+            break
+
+
+def reponse(attr, faits):
+    for (a, v) in faits:
+        if attr == a:
+            print(attr, " = ", v)
+
+
+if __name__ == '__main__':
+    BR = {}
+    #print(base_regles())
+    chainage_avant_sat(base_regles(), base_faits())
